@@ -76,7 +76,7 @@ class FileSystem:
                 elif item == "..":
                     if temp_current.root is None:
                         path_incorrect = True
-                        print("Error cd: no such file or directory: {}".format(full_path))
+                        print("Error cd: no such directory: {}".format(full_path))
                     else:
                         temp_current = temp_current.root
                 else:
@@ -90,13 +90,13 @@ class FileSystem:
                             break
                     if not child_found:
                         path_incorrect = True
-                        print("Error cd: no such file or directory: {}".format(full_path))
+                        print("Error cd: no such directory: {}".format(full_path))
 
             # If all directories found correct and changed, assign temp_current value to current directory
             self.current = temp_current
 
         else:
-            print("Error cd: no such file or directory: {}".format(full_path))
+            print("Error cd: no such directory: {}".format(full_path))
 
     def is_directory_name_valid(self, directory_name):
 
@@ -187,14 +187,16 @@ if __name__ == "__main__":
             if user_input == "cd":
                 fileSystem.cd()
             else:
-                arg = user_input[3:]
-                fileSystem.cd(arg)
+                if user_input.startswith("cd "):
+                    arg = user_input[3:]
+                    fileSystem.cd(arg)
+                else:print("command not found: {}".format(user_input))
 
-        elif user_input.startswith("touch"):
+        elif user_input.startswith("touch "):
             arg = user_input[6:]
             fileSystem.touch(arg)
 
-        elif user_input.startswith("mkdir"):
+        elif user_input.startswith("mkdir "):
             arg = user_input[6:]
             fileSystem.mkdir(arg)
 
